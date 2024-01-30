@@ -2,11 +2,13 @@
 
 ///////////////////////////////////////
 // Modal window
-
+const header = document.querySelector('header')
 const modal = document.querySelector('.modal');
 const overlay = document.querySelector('.overlay');
 const btnCloseModal = document.querySelector('.btn--close-modal');
 const btnsOpenModal = document.querySelectorAll('.btn--show-modal');
+const btnScroll = document.querySelector('.btn--scroll-to');
+const section1 = document.querySelector('#section--1');
 
 const openModal = function (e) {
   e.preventDefault();
@@ -30,8 +32,53 @@ document.addEventListener('keydown', function (e) {
     closeModal();
   }
 });
+// creating elememt
+const message = document.createElement('div');
+message.classList.add('cookie');
+message.innerHTML = 'We use cookies for improved functionality and performance. <button class="btn btn--close-cookies">GOT It</button>';
+header.append(message)
+
+//removing element
+document.querySelector('.btn--close-cookies').addEventListener('click', ()=>{
+message.remove()
+})
+
+btnScroll.addEventListener('click', ()=>{
+  section1.scrollIntoView({behavior : 'smooth'})
+})
+
+// //styling
+// message.style.backgroundColor = '#37383d'
+// message.style.width = '120%';
+// message.style.height = Number.parseFloat(getComputedStyle(message).height) + 10 + 'px'
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 let count = 0;
- const hello = new Promise(function(resolve, reject){
-  if(count ===0)
-  resolve
- })
+const hello = new Promise(function (resolve, reject) {
+  if (count === 0) { }
+
+})
+console.log(navigator.language)
