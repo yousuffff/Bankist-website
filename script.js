@@ -47,6 +47,19 @@ btnScroll.addEventListener('click', ()=>{
   section1.scrollIntoView({behavior : 'smooth'})
 })
 
+// Event delegation
+//we apply event on link container 
+document.querySelector('.nav__links').addEventListener('click', function(e){
+  e.preventDefault();
+  console.log(e.target);
+  if(e.target.classList.contains('nav__link')){
+    const id = e.target.getAttribute('href')
+    console.log(id)
+    document.querySelector(id).scrollIntoView({behavior: 'smooth'})
+  }
+})
+
+
 // //styling
 // message.style.backgroundColor = '#37383d'
 // message.style.width = '120%';
