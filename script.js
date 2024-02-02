@@ -34,29 +34,29 @@ document.addEventListener('keydown', function (e) {
   }
 });
 // creating elememt
-const message = document.createElement('div');
-message.classList.add('cookie');
-message.innerHTML = 'We use cookies for improved functionality and performance. <button class="btn btn--close-cookies">GOT It</button>';
-header.append(message)
+// const message = document.createElement('div');
+// message.classList.add('cookie');
+// message.innerHTML = 'We use cookies for improved functionality and performance. <button class="btn btn--close-cookies">GOT It</button>';
+// header.append(message)
 
-//removing element
-document.querySelector('.btn--close-cookies').addEventListener('click', ()=>{
-message.remove()
-})
+// //removing element
+// document.querySelector('.btn--close-cookies').addEventListener('click', () => {
+//   message.remove()
+// })
 
-btnScroll.addEventListener('click', ()=>{
-  section1.scrollIntoView({behavior : 'smooth'})
+btnScroll.addEventListener('click', () => {
+  section1.scrollIntoView({ behavior: 'smooth' })
 })
 
 // Event delegation
 //we apply event on link container 
-document.querySelector('.nav__links').addEventListener('click', function(e){
+document.querySelector('.nav__links').addEventListener('click', function (e) {
   e.preventDefault();
   // console.log(e.target);
-  if(e.target.classList.contains('nav__link')){
+  if (e.target.classList.contains('nav__link')) {
     const id = e.target.getAttribute('href')
     // console.log(id)
-    document.querySelector(id).scrollIntoView({behavior: 'smooth'})
+    document.querySelector(id).scrollIntoView({ behavior: 'smooth' })
   }
 })
 
@@ -65,9 +65,9 @@ const tabs = document.querySelectorAll('.operations__tab');
 const tabContainer = document.querySelector('.operations__tab-container');
 const tabContent = document.querySelectorAll('.operations__content');
 
-tabContainer.addEventListener('click', function(e){
+tabContainer.addEventListener('click', function (e) {
   const clicked = e.target.closest('.operations__tab');
-  if(!clicked) return
+  if (!clicked) return
 
   tabs.forEach(el => el.classList.remove('operations__tab--active'))
   clicked.classList.add('operations__tab--active')
@@ -77,22 +77,22 @@ tabContainer.addEventListener('click', function(e){
   document.querySelector(`.operations__content--${clicked.dataset.tab}`).classList.add('operations__content--active')
 })
 // nav section
-const handleHover = function(e){
-  if(e.target.classList.contains('nav__link')){
+const handleHover = function (e) {
+  if (e.target.classList.contains('nav__link')) {
     const link = e.target;
     const sibling = link.closest('.nav').querySelectorAll('.nav__link');
     const logo = link.closest('.nav').querySelector('img');
-  
+
     sibling.forEach(el => {
-      if(el !== link) el.style.opacity = this; // opacity
+      if (el !== link) el.style.opacity = this; // opacity
     })
     // logo.style.opacity =this; // opacity
   }
 }
 // passing argument in to event handlers
 // nav.addEventListener('mouseover', function(e){
-  // handleHover(0.5)// old way
-  // })
+// handleHover(0.5)// old way
+// })
 nav.addEventListener('mouseover', handleHover.bind(0.5)) // modern way
 nav.addEventListener('mouseout', handleHover.bind(1))
 
@@ -105,10 +105,10 @@ nav.addEventListener('mouseout', handleHover.bind(1))
 
 // NEW WAY
 const navHeight = nav.getBoundingClientRect().height;
-const sticky = function(enteries){
-  const [entry]= enteries;
-  if(!entry.isIntersecting) nav.classList.add('sticky')
-    else nav.classList.remove('sticky');
+const sticky = function (enteries) {
+  const [entry] = enteries;
+  if (!entry.isIntersecting) nav.classList.add('sticky')
+  else nav.classList.remove('sticky');
 }
 
 const headerObserver = new IntersectionObserver(sticky, {
@@ -118,6 +118,22 @@ const headerObserver = new IntersectionObserver(sticky, {
 })
 
 headerObserver.observe(header)
+
+const allSection = document.querySelectorAll('section');
+const revealSection = function (enteries, observe) {
+  const [entry] = enteries;
+  if(!entry.isIntersecting) return;
+  entry.target.classList.remove('section--hidden')
+  observe.unobserve(entry.target) // tp stop observer
+}
+const sectionObserver = new IntersectionObserver(revealSection, {
+  root: null,
+  threshold: 0.15,
+})
+allSection.forEach(function (section) {
+  sectionObserver.observe(section);
+  section.classList.add('section--hidden')
+})
 
 // //styling
 // message.style.backgroundColor = '#37383d'
