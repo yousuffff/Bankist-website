@@ -76,6 +76,7 @@ tabContainer.addEventListener('click', function(e){
   tabContent.forEach(content => content.classList.remove('operations__content--active'));
   document.querySelector(`.operations__content--${clicked.dataset.tab}`).classList.add('operations__content--active')
 })
+// nav section
 const handleHover = function(e){
   if(e.target.classList.contains('nav__link')){
     const link = e.target;
@@ -85,17 +86,38 @@ const handleHover = function(e){
     sibling.forEach(el => {
       if(el !== link) el.style.opacity = this; // opacity
     })
-    logo.style.opacity =this; // opacity
+    // logo.style.opacity =this; // opacity
   }
 }
+// passing argument in to event handlers
+// nav.addEventListener('mouseover', function(e){
+  // handleHover(0.5)// old way
+  // })
 nav.addEventListener('mouseover', handleHover.bind(0.5)) // modern way
-nav.addEventListener('mouseover', function(e){
-handleHover(0.5)// old way
-})
-
 nav.addEventListener('mouseout', handleHover.bind(1))
 
+// OLD WAY
+// const initial = section1.getBoundingClientRect();
+// window.addEventListener('scroll' , function(){
+//   if (window.scrollY > initial.top) nav.classList.add('sticky')
+//   else nav.classList.remove('sticky');
+// })
 
+// NEW WAY
+const navHeight = nav.getBoundingClientRect().height;
+const sticky = function(enteries){
+  const [entry]= enteries;
+  if(!entry.isIntersecting) nav.classList.add('sticky')
+    else nav.classList.remove('sticky');
+}
+
+const headerObserver = new IntersectionObserver(sticky, {
+  root: null,
+  threshold: 0,
+  rootMargin: `-${navHeight}px`
+})
+
+headerObserver.observe(header)
 
 // //styling
 // message.style.backgroundColor = '#37383d'
