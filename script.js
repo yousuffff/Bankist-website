@@ -9,6 +9,7 @@ const btnCloseModal = document.querySelector('.btn--close-modal');
 const btnsOpenModal = document.querySelectorAll('.btn--show-modal');
 const btnScroll = document.querySelector('.btn--scroll-to');
 const section1 = document.querySelector('#section--1');
+const nav = document.querySelector('.nav');
 
 const openModal = function (e) {
   e.preventDefault();
@@ -51,13 +52,49 @@ btnScroll.addEventListener('click', ()=>{
 //we apply event on link container 
 document.querySelector('.nav__links').addEventListener('click', function(e){
   e.preventDefault();
-  console.log(e.target);
+  // console.log(e.target);
   if(e.target.classList.contains('nav__link')){
     const id = e.target.getAttribute('href')
-    console.log(id)
+    // console.log(id)
     document.querySelector(id).scrollIntoView({behavior: 'smooth'})
   }
 })
+
+//tabbed section 
+const tabs = document.querySelectorAll('.operations__tab');
+const tabContainer = document.querySelector('.operations__tab-container');
+const tabContent = document.querySelectorAll('.operations__content');
+
+tabContainer.addEventListener('click', function(e){
+  const clicked = e.target.closest('.operations__tab');
+  if(!clicked) return
+
+  tabs.forEach(el => el.classList.remove('operations__tab--active'))
+  clicked.classList.add('operations__tab--active')
+  // console.log(clicked.dataset.tab);
+  //activating content area
+  tabContent.forEach(content => content.classList.remove('operations__content--active'));
+  document.querySelector(`.operations__content--${clicked.dataset.tab}`).classList.add('operations__content--active')
+})
+const handleHover = function(e){
+  if(e.target.classList.contains('nav__link')){
+    const link = e.target;
+    const sibling = link.closest('.nav').querySelectorAll('.nav__link');
+    const logo = link.closest('.nav').querySelector('img');
+  
+    sibling.forEach(el => {
+      if(el !== link) el.style.opacity = this; // opacity
+    })
+    logo.style.opacity =this; // opacity
+  }
+}
+nav.addEventListener('mouseover', handleHover.bind(0.5)) // modern way
+nav.addEventListener('mouseover', function(e){
+handleHover(0.5)// old way
+})
+
+nav.addEventListener('mouseout', handleHover.bind(1))
+
 
 
 // //styling
@@ -94,4 +131,4 @@ const hello = new Promise(function (resolve, reject) {
   if (count === 0) { }
 
 })
-console.log(navigator.language)
+// console.log(navigator.language)
