@@ -122,7 +122,7 @@ headerObserver.observe(header)
 const allSection = document.querySelectorAll('section');
 const revealSection = function (enteries, observe) {
   const [entry] = enteries;
-  if(!entry.isIntersecting) return;
+  if (!entry.isIntersecting) return;
   entry.target.classList.remove('section--hidden')
   observe.unobserve(entry.target) // tp stop observer
 }
@@ -134,6 +134,72 @@ allSection.forEach(function (section) {
   sectionObserver.observe(section);
   section.classList.add('section--hidden')
 })
+
+
+//////////// lazy loading
+const images = document.querySelectorAll('img[data-src]');
+
+const lazyloading = function (enteries, observe) {
+  const [entry] = enteries;
+
+  if (!entry.isIntersecting) return;
+  // replacing src 
+  entry.target.src = entry.target.dataset.src;
+  //removing blur class from image
+  entry.target.addEventListener('load', function () {
+    entry.target.classList.remove('lazy-img')
+  })
+}
+
+const imgObserver = new IntersectionObserver(lazyloading, {
+  root: null,
+  threshold: 0,
+  // rootMargin: '-200px',
+})
+images.forEach(image => imgObserver.observe(image))
+
+
+///////////// slider function
+
+const slides = document.querySelectorAll('.slide');
+// console.log(slides);
+const btnRight = document.querySelector('.slider__btn--right')
+const btnLeft = document.querySelector('.slider__btn--left')
+
+let curSlide = 0;
+const maxSlide = slides.length - 1;
+// console.log(maxSlide);
+
+
+//slide move function 
+const goToSlide = function (slide) {
+  slides.forEach((slide, i) => {
+    slide.style.transform = `translateX(${100 * (i - curSlide)}%)`;
+  })
+}
+goToSlide(curSlide);
+btnRight.addEventListener('click', () => {
+  if (curSlide === maxSlide) {
+    curSlide = 0
+  } else {
+    curSlide++;
+  }
+  goToSlide(curSlide)
+})
+btnLeft.addEventListener('click', () => {
+  if (curSlide === 0) {
+    curSlide = maxSlide
+  } else {
+    curSlide--;
+  }
+  goToSlide(curSlide)
+})
+
+
+
+
+
+
 
 // //styling
 // message.style.backgroundColor = '#37383d'
