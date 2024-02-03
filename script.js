@@ -157,7 +157,7 @@ const lazyloading = function (enteries, observe) {
 const imgObserver = new IntersectionObserver(lazyloading, {
   root: null,
   threshold: 0,
-  // rootMargin: '-200px',
+  rootMargin: '-200px',
 });
 images.forEach(image => imgObserver.observe(image));
 
